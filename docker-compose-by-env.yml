@@ -1,0 +1,25 @@
+services:
+   palworld:
+      image: thijsvanloef/palworld-server-docker:latest
+      restart: unless-stopped
+      container_name: palworld-server
+      stop_grace_period: 30s # Set to however long you are willing to wait for the container to gracefully stop
+      ports:
+        - ${PORT}:${PORT}/udp
+        - 27015:27015/udp # Required if you want your server to show up in the community servers tab 
+      environment:
+         - PUID=${PUID}
+         - PGID=${PGID}
+         - PORT=${PORT} # Optional but recommended
+         - PLAYERS=${PLAYERS} # Optional but recommended
+         - SERVER_PASSWORD=${SERVER_PASSWORD} # Optional but recommended
+         - MULTITHREADING=${MULTITHREADING}
+         - RCON_ENABLED=${RCON_ENABLED}
+         - RCON_PORT=${RCON_PORT}
+         - TZ=${TZ}
+         - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+         - COMMUNITY=${COMMUNITY}  # Enable this if you want your server to show up in the community servers tab, USE WITH SERVER_PASSWORD!
+         - SERVER_NAME=${SERVER_NAME}
+         - SERVER_DESCRIPTION=${SERVER_DESCRIPTION}
+      volumes:
+         - ./palworld:/palworld/
